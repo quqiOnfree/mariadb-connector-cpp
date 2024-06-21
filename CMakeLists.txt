@@ -737,7 +737,7 @@ ELSE()
           DESTINATION share/unofficial-mariadbcpp)
 
   install(EXPORT unofficial-${LIBRARY_NAME}Targets
-          FILE ${LIBRARY_NAME}Targets.cmake
+          FILE unofficial-${LIBRARY_NAME}Targets.cmake
           NAMESPACE unofficial::
           DESTINATION share/unofficial-mariadbcpp)
 ENDIF()
