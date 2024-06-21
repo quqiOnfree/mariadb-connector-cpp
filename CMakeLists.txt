@@ -732,7 +732,7 @@ ELSE()
   configure_package_config_file(
     "${CMAKE_CURRENT_SOURCE_DIR}/unofficial-mariadbcppConfig.cmake.in"
     "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
-    INSTALL_DESTINATION "share/${LIBRARY_NAME}")
+    INSTALL_DESTINATION "share/unofficial-mariadbcpp")
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
           DESTINATION share/unofficial-mariadbcpp)
 
