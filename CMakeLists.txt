@@ -754,10 +754,10 @@ ENDIF()
 
 # Packaging
 IF(0)
-  INCLUDE(packaging)
-  MESSAGE(STATUS "License File: ${CPACK_RESOURCE_FILE_LICENSE}")
-  MESSAGE(STATUS "ReadMe File: ${CPACK_PACKAGE_DESCRIPTION_FILE}")
-  MESSAGE(STATUS "Source Package Filename: ${CPACK_SOURCE_PACKAGE_FILE_NAME}.${CPACK_SOURCE_GENERATOR}")
+INCLUDE(packaging)
+MESSAGE(STATUS "License File: ${CPACK_RESOURCE_FILE_LICENSE}")
+MESSAGE(STATUS "ReadMe File: ${CPACK_PACKAGE_DESCRIPTION_FILE}")
+MESSAGE(STATUS "Source Package Filename: ${CPACK_SOURCE_PACKAGE_FILE_NAME}.${CPACK_SOURCE_GENERATOR}")
 ENDIF()
 
 # install_test/CMakeLists.txt configuration should go after packaging.cmake but before include(CPack). Since CPack included in packaging cmake,
