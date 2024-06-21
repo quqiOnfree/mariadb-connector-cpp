@@ -738,7 +738,7 @@ ELSE()
 
   install(EXPORT unofficial-${LIBRARY_NAME}Targets
           FILE ${LIBRARY_NAME}Targets.cmake
-          NAMESPACE unofficial::mariadbcpp::
+          NAMESPACE unofficial::
           DESTINATION share/unofficial-mariadbcpp)
 ENDIF()
 # Tests. Checking if we have them. May be not the case if we are building from source package
