@@ -712,28 +712,28 @@ ELSE()
     #MESSAGE(STATUS "Configuring to generate PKG package")
     #ADD_SUBDIRECTORY(osxinstall)
   ENDIF()
-  INSTALL(TARGETS ${LIBRARY_NAME}
-          LIBRARY DESTINATION ${INSTALL_LIBDIR}
-          COMPONENT SharedLibraries)
-  INSTALL(TARGETS
-          ${STATIC_LIBRARY_NAME}
-          ARCHIVE DESTINATION ${INSTALL_LIBDIR}
-          COMPONENT Development)
+  install(TARGETS ${LIBRARY_NAME} ${STATIC_LIBRARY_NAME}
+          EXPORT ${LIBRARY_NAME}Targets 
+          LIBRARY DESTINATION lib
+          ARCHIVE DESTINATION lib
+          RUNTIME DESTINATION bin)
 
-  MESSAGE(STATUS "Documentation installed to ${INSTALL_DOCDIR}")
-  MESSAGE(STATUS "License file installed to ${INSTALL_LICENSEDIR}")
   MESSAGE(STATUS "Public API header files installed to ${INSTALL_INCLUDEDIR}")
-  INSTALL(FILES
-          ${CMAKE_SOURCE_DIR}/README
-          DESTINATION
-          "${INSTALL_DOCDIR}"
-          COMPONENT Documentation)
-  INSTALL(FILES
-          ${CMAKE_SOURCE_DIR}/COPYING
-          DESTINATION
-          "${INSTALL_LICENSEDIR}"
-          COMPONENT Documentation)
+  SET(INSTALL_INCLUDEDIR include/mariadbcpp)
   ADD_SUBDIRECTORY(include)
+
+  include(CMakePackageConfigHelpers)
+  configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/${LIBRARY_NAME}Config.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}Config.cmake"
+    INSTALL_DESTINATION "share/${LIBRARY_NAME}")
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}Config.cmake"
+          DESTINATION share/${LIBRARY_NAME})
+
+  install(EXPORT ${LIBRARY_NAME}Targets
+          FILE ${LIBRARY_NAME}Targets.cmake
+          NAMESPACE unofficial::
+          DESTINATION share/${LIBRARY_NAME})
 ENDIF()
 # Tests. Checking if we have them. May be not the case if we are building from source package
 IF(0)
