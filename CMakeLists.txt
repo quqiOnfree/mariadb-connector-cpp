@@ -724,22 +724,22 @@ ELSE()
           ARCHIVE DESTINATION lib
           RUNTIME DESTINATION bin)
 
-  MESSAGE(STATUS "Public API header files installed to ${INSTALL_INCLUDEDIR}")
   SET(INSTALL_INCLUDEDIR include/mariadbcpp)
+  MESSAGE(STATUS "Public API header files installed to ${INSTALL_INCLUDEDIR}")
   ADD_SUBDIRECTORY(include)
 
   include(CMakePackageConfigHelpers)
   configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/${LIBRARY_NAME}Config.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}Config.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/unofficial-mariadbcppConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
     INSTALL_DESTINATION "share/${LIBRARY_NAME}")
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/${LIBRARY_NAME}Config.cmake"
-          DESTINATION share/${LIBRARY_NAME})
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
+          DESTINATION share/unofficial-mariadbcpp)
 
   install(EXPORT ${LIBRARY_NAME}Targets
           FILE ${LIBRARY_NAME}Targets.cmake
-          NAMESPACE unofficial::
-          DESTINATION share/${LIBRARY_NAME})
+          NAMESPACE unofficial::mariadbcpp::
+          DESTINATION share/unofficial-mariadbcpp)
 ENDIF()
 # Tests. Checking if we have them. May be not the case if we are building from source package
 IF(0)
