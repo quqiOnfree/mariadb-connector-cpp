@@ -86,3 +86,4 @@ install_test/CMakeLists.txt
 src/Version.h
 src/maconncpp.def
 CMakeSettings.json
+*.patch
