@@ -660,7 +660,7 @@ TARGET_LINK_LIBRARIES(${STATIC_LIBRARY_NAME} PRIVATE unofficial::libmariadb)
 TARGET_INCLUDE_DIRECTORIES(${LIBRARY_NAME}
   INTERFACE
     $<INSTALL_INTERFACE:include>/${LIBRARY_NAME})
-    TARGET_INCLUDE_DIRECTORIES(${STATIC_LIBRARY_NAME}
+TARGET_INCLUDE_DIRECTORIES(${STATIC_LIBRARY_NAME}
   INTERFACE
     $<INSTALL_INTERFACE:include>/${LIBRARY_NAME})
 
@@ -719,7 +719,7 @@ ELSE()
     #ADD_SUBDIRECTORY(osxinstall)
   ENDIF()
   install(TARGETS ${LIBRARY_NAME} ${STATIC_LIBRARY_NAME}
-          EXPORT ${LIBRARY_NAME}Targets 
+          EXPORT unofficial-${LIBRARY_NAME}Targets 
           LIBRARY DESTINATION lib
           ARCHIVE DESTINATION lib
           RUNTIME DESTINATION bin)
@@ -736,7 +736,7 @@ ELSE()
   install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
           DESTINATION share/unofficial-mariadbcpp)
 
-  install(EXPORT ${LIBRARY_NAME}Targets
+  install(EXPORT unofficial-${LIBRARY_NAME}Targets
           FILE ${LIBRARY_NAME}Targets.cmake
           NAMESPACE unofficial::mariadbcpp::
           DESTINATION share/unofficial-mariadbcpp)
