@@ -408,7 +408,7 @@ IF (WITH_MSAN)
 ENDIF()
 
 # This has to be before C/C's cmake run, or it will build with /MD
-IF(WIN32)
+IF(0)
   IF (MSVC)
     SET(CONFIG_TYPES "DEBUG" "RELEASE" "RELWITHDEBINFO" "MINSIZEREL")
     FOREACH(BUILD_TYPE ${CONFIG_TYPES})
@@ -446,7 +446,7 @@ ENDIF()
 
 # By now we have everything needed by tests. If we need to build them only - firing config now and exit
 # There is "normal" tests config below
-IF(BUILD_TESTS_ONLY)
+IF(0)
   IF(WIN32)
     LINK_DIRECTORIES("$ENV{ProgramFiles}/MariaDB/MariaDB C++ Connector 64-bit")
   ELSE()
@@ -469,7 +469,7 @@ IF(NOT WITH_SSL)
 ENDIF()
 
 ### Including C/C subproject
-IF(NOT USE_SYSTEM_INSTALLED_LIB)
+IF(0)
   IF(EXISTS ${CMAKE_SOURCE_DIR}/libmariadb)
     IF(GIT_BUILD_SRCPKG)
       # We don't want conn/c (wrong) src pkg to be built.
@@ -525,6 +525,8 @@ IF(NOT USE_SYSTEM_INSTALLED_LIB)
   ENDIF()
 ENDIF()
 
+FIND_PACKAGE(unofficial-libmariadb CONFIG REQUIRED)
+
 IF(WITH_MSI AND WITH_SIGNCODE)
   IF(WIN32 AND NOT SIGN_OPTIONS)
     SET(SIGN_OPTIONS /a /t http://timestamp.verisign.com/scripts/timstamp.dll)
@@ -545,7 +547,7 @@ CONFIGURE_FILE(${CMAKE_SOURCE_DIR}/src/maconncpp.def.in
                ${CMAKE_SOURCE_DIR}/src/maconncpp.def)
 
 # Dynamic linking is default on non-Windows
-IF(MARIADB_LINK_DYNAMIC)
+IF(0)
   IF(USE_SYSTEM_INSTALLED_LIB)
     IF(MINGW)
       # I guess -l can be removed here. Also, for build with c/c as submodule this will have to me moved on top level out of this IF's 
@@ -601,6 +603,7 @@ ENDIF()
 
 
 ADD_LIBRARY(${LIBRARY_NAME}_obj OBJECT ${MACPP_SOURCES})
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME}_obj PRIVATE unofficial::libmariadb)
 IF(UNIX)
   SET_TARGET_PROPERTIES(${LIBRARY_NAME}_obj PROPERTIES COMPILE_FLAGS "${CMAKE_SHARED_LIBRARY_C_FLAGS}")
 ENDIF()
@@ -652,8 +655,8 @@ ELSE()
   ENDIF()
 ENDIF()
 
-TARGET_LINK_LIBRARIES(${LIBRARY_NAME} ${MARIADB_CLIENT_TARGET_NAME} ${PLATFORM_DEPENDENCIES})
-TARGET_LINK_LIBRARIES(${STATIC_LIBRARY_NAME} mariadbclient)
+TARGET_LINK_LIBRARIES(${LIBRARY_NAME} PRIVATE ${PLATFORM_DEPENDENCIES} unofficial::libmariadb)
+TARGET_LINK_LIBRARIES(${STATIC_LIBRARY_NAME} PRIVATE unofficial::libmariadb)
 
 # MINGW Specific includes and linking
 IF(MINGW)
@@ -692,7 +695,7 @@ ADD_DEPENDENCIES(${LIBRARY_NAME} DEPENDENCIES_FOR_PACKAGE)
 ########## Packaging ##########
 
 # MSI
-IF(WIN32)
+IF(0)
   IF(WITH_MSI)
     ADD_CUSTOM_COMMAND(TARGET ${LIBRARY_NAME} POST_BUILD
       COMMAND ${CMAKE_COMMAND} ARGS -DDRIVER_LIB_DIR=$<TARGET_FILE_DIR:${LIBRARY_NAME}>
@@ -733,7 +736,7 @@ ELSE()
   ADD_SUBDIRECTORY(include)
 ENDIF()
 # Tests. Checking if we have them. May be not the case if we are building from source package
-IF(WITH_UNIT_TESTS AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt")
+IF(0)
   ADD_SUBDIRECTORY(test)
   ADD_CUSTOM_COMMAND(TARGET ${LIBRARY_NAME} POST_BUILD
 	  COMMAND ${CMAKE_COMMAND} ARGS -E copy $<TARGET_FILE:${LIBRARY_NAME}> test)
@@ -744,10 +747,12 @@ IF(WITH_UNIT_TESTS AND EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/test/CMakeLists.txt")
 ENDIF()
 
 # Packaging
-INCLUDE(packaging)
-MESSAGE(STATUS "License File: ${CPACK_RESOURCE_FILE_LICENSE}")
-MESSAGE(STATUS "ReadMe File: ${CPACK_PACKAGE_DESCRIPTION_FILE}")
-MESSAGE(STATUS "Source Package Filename: ${CPACK_SOURCE_PACKAGE_FILE_NAME}.${CPACK_SOURCE_GENERATOR}")
+IF(0)
+  INCLUDE(packaging)
+  MESSAGE(STATUS "License File: ${CPACK_RESOURCE_FILE_LICENSE}")
+  MESSAGE(STATUS "ReadMe File: ${CPACK_PACKAGE_DESCRIPTION_FILE}")
+  MESSAGE(STATUS "Source Package Filename: ${CPACK_SOURCE_PACKAGE_FILE_NAME}.${CPACK_SOURCE_GENERATOR}")
+ENDIF()
 
 # install_test/CMakeLists.txt configuration should go after packaging.cmake but before include(CPack). Since CPack included in packaging cmake,
 # that configuration has been moved there. For the same reason there also moved the message with package name
