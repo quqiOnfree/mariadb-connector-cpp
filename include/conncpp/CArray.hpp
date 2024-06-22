@@ -24,7 +24,9 @@
 #include "buildconf.hpp"
 #include <initializer_list>
 #include <vector>
-
+#ifdef __MINGW32__
+#include <cstdint>
+#endif
 
 namespace sql
 {

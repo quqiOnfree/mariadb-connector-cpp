@@ -667,7 +667,7 @@ TARGET_INCLUDE_DIRECTORIES(${STATIC_LIBRARY_NAME}
 # MINGW Specific includes and linking
 IF(MINGW)
   
-  IF(MARIADB_SHLWAPI_LIB)
+  IF(0)
     TARGET_LINK_LIBRARIES(${LIBRARY_NAME} ${MARIADB_SHLWAPI_LIB})
     MESSAGE(STATUS "Found shlwapi lib - ${MARIADB_SHLWAPI_LIB}")
   ELSE()
@@ -675,17 +675,17 @@ IF(MINGW)
     MESSAGE(WARNING "Did not find shlwapi lib")
   ENDIF()
 
-  IF(MARIADB_CONNECTORC_INCLUDE)
+  IF(1)
     # Probably has to be private, and not PUBLIC here
-    TARGET_INCLUDE_DIRECTORIES(${LIBRARY_NAME}_obj PUBLIC  ${MARIADB_CONNECTORC_INCLUDE})
+    # TARGET_INCLUDE_DIRECTORIES(${LIBRARY_NAME}_obj PUBLIC  ${MARIADB_CONNECTORC_INCLUDE})
     MESSAGE(STATUS "Found MariaDB Connector/C includes - ${MARIADB_CONNECTORC_INCLUDE}")
   ELSE()
     MESSAGE(WARNING "Did not find MariaDB Connector/C includes")
   ENDIF()
   
-  IF(MARIADB_CONNECTORC_LIB)
-    TARGET_LINK_DIRECTORIES(${LIBRARY_NAME} PUBLIC ${MARIADB_CONNECTORC_LIB})
-    TARGET_LINK_DIRECTORIES(${STATIC_LIBRARY_NAME} PUBLIC ${MARIADB_CONNECTORC_LIB})
+  IF(1)
+    # TARGET_LINK_DIRECTORIES(${LIBRARY_NAME} PUBLIC ${MARIADB_CONNECTORC_LIB})
+    # TARGET_LINK_DIRECTORIES(${STATIC_LIBRARY_NAME} PUBLIC ${MARIADB_CONNECTORC_LIB})
     MESSAGE(STATUS "Found MariaDB Connector/C libraries - ${MARIADB_CONNECTORC_LIB}")
   ELSE()
     MESSAGE(WARNING "Did not find MariaDB Connector/C libraries")
@@ -719,7 +719,7 @@ ELSE()
     #ADD_SUBDIRECTORY(osxinstall)
   ENDIF()
   install(TARGETS ${LIBRARY_NAME} ${STATIC_LIBRARY_NAME}
-          EXPORT unofficial-${LIBRARY_NAME}Targets 
+          EXPORT unofficial-${LIBRARY_NAME}-targets
           LIBRARY DESTINATION lib
           ARCHIVE DESTINATION lib
           RUNTIME DESTINATION bin)
@@ -730,14 +730,14 @@ ELSE()
 
   include(CMakePackageConfigHelpers)
   configure_package_config_file(
-    "${CMAKE_CURRENT_SOURCE_DIR}/unofficial-mariadbcppConfig.cmake.in"
-    "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
+    "${CMAKE_CURRENT_SOURCE_DIR}/unofficial-mariadbcpp-config.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcpp-config.cmake"
     INSTALL_DESTINATION "share/unofficial-mariadbcpp")
-  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcppConfig.cmake"
+  install(FILES "${CMAKE_CURRENT_BINARY_DIR}/unofficial-mariadbcpp-config.cmake"
           DESTINATION share/unofficial-mariadbcpp)
 
-  install(EXPORT unofficial-${LIBRARY_NAME}Targets
-          FILE unofficial-${LIBRARY_NAME}Targets.cmake
+  install(EXPORT unofficial-${LIBRARY_NAME}-targets
+          FILE unofficial-${LIBRARY_NAME}-targets.cmake
           NAMESPACE unofficial::
           DESTINATION share/unofficial-mariadbcpp)
 ENDIF()
