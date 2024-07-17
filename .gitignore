@@ -72,3 +72,18 @@ benchmark/main-benchmark
 *.exe
 *.out
 *.app
+
+# Build directories
+[Bb]uild/
+[Oo]ut/
+
+# Work directories
+.vs/
+.vscode/
+
+# Other directories
+install_test/CMakeLists.txt
+src/Version.h
+src/maconncpp.def
+CMakeSettings.json
+*.patch
